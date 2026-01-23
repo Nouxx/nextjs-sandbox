@@ -1,0 +1,34 @@
+/* Only show GREEN if valid AND the user has typed something (placeholder hidden) */
+input:not(:placeholder-shown):valid {
+  border: 1px solid green;
+}
+
+/* Only show RED if invalid AND the user has typed something (placeholder hidden) */
+input:not(:placeholder-shown):invalid {
+  border: 1px solid red;
+}
+
+form {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  width: 300px;
+}
+
+.input__email {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  input {
+    height: 25px;
+  }
+}
+
+.input__email--error {
+  color: red;
+  font-size: 0.75rem;
+}
