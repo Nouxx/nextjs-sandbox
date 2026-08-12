@@ -2,10 +2,14 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 function LinkComponent({ label }: Readonly<{ label: string }>) {
-  return <a href={`/${label}`}>{label}</a>;
+  return (
+    <li>
+      <a href={`/${label}`}>{label}</a>
+    </li>
+  );
 }
 
-const routes = ["email-validation"];
+const routes = ["email-validation", "css-grid-overlay", "hidden-button"];
 
 export default function Home() {
   return (

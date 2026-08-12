@@ -1,0 +1,16 @@
+.myGrid {
+  width: 100%;
+  height: 250px;
+  background: green;
+  display: grid;
+
+  &__image {
+    background: red;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__content {
+    grid-area: "stack";
+  }
+}
