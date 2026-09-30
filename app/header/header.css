@@ -1,0 +1,73 @@
+.header {
+  border: 1px solid orange;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  border: 1px solid red;
+  min-width: 150px;
+}
+
+/* Overflow detector: .nav is a scroll container whose scroll timeline is only
+   active while .actions overflows it, i.e. while logo and actions would touch.
+   Scroll-driven animations on the children then flip visibility, which keeps
+   layout intact (no feedback loop) and removes hidden items from tab order. */
+.nav {
+  border: 1px solid violet;
+  padding: 5px;
+
+  /* takes the leftover space, can shrink to 0 */
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  overflow-x: hidden; /* turns .nav into a scroll container */
+  scroll-timeline: --nav-overflow inline; /* turns the scroll range into a timeline */
+  /* if the scroll container has no scrollable overflow (maximum scroll = 0), the timeline is inactive. */
+
+  position: relative;
+}
+
+.actions {
+  /* never shrinks, width = its content */
+  flex: none;
+  white-space: nowrap;
+
+  margin-inline-start: auto; /* push right, but overflow to the scrollable end, unlike justify-content */
+  /* With flex-end, the actions overflow out the left side, the scroll range stays 0, and nothing is detected.
+  An auto margin can't go below 0, so the actions push right and overflow to the right. */
+
+  border: 1px solid green;
+  animation: hide-when-overflowing linear both;
+  animation-timeline: --nav-overflow;
+}
+
+.mobile-actions {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  border: 1px solid blue;
+  min-width: 50px;
+  visibility: hidden;
+  animation: show-when-overflowing linear both;
+  animation-timeline: --nav-overflow;
+}
+
+@keyframes hide-when-overflowing {
+  from,
+  to {
+    /* display: none would break: the actions would lose their box,
+    the overflow would disappear, the timeline would become inactive,
+    the actions would reappear, and the cycle would repeat every frame. */
+    visibility: hidden;
+  }
+}
+
+@keyframes show-when-overflowing {
+  from,
+  to {
+    visibility: visible;
+  }
+}
